@@ -8,26 +8,42 @@ def load_data(file_path):
 # Load animal data from the JSON file
 animal_date = load_data("animals_data.json")
 
+# Read the content of the animals_template.html
+with open("animals_template.html","r") as file:
+    read_html = file.read()
+
+
 def display_animals_info(animal_info):
     """
     Displays selected info about each animal
     """
+    # Create string with animals info
+    output = ""
+
     for animal in animal_info:
         name = animal.get("name")
         diet = animal.get("characteristics", {}).get("diet")
         location = animal.get("locations",[])[0]
         animal_type = animal.get("characteristics", {}).get("type")
 
-        # print info only if it exists
+        # add info only if it exists
         if name:
-            print(f"Name : {name}")
+            output += f"Name: {name}\n"
         if diet:
-            print(f"Diet : {diet}")
+            output += f"Diet : {diet}\n"
         if location:
-            print(f"Location : {location}")
+            output += f"Location : {location}\n"
         if animal_type:
-            print(f"Type : {animal_type}")
-        print("")
+            output +=f"Type : {animal_type}\n"
+    return output
 
-display_animals_info(animal_date)
+animals_short_info = display_animals_info(animal_date)
 
+
+# Replace text in html with extracted info
+main_html = read_html.replace("__REPLACE_ANIMALS_INFO__", animals_short_info)
+print(main_html)
+
+# Write the new HTML content to a new file, main.html
+with open("main.html", "w") as final_file:
+    final_file.write(main_html)
