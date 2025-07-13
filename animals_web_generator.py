@@ -17,7 +17,8 @@ def display_animals_info(animal_info):
     """
     Displays selected info about each animal
     """
-    # Create string with animals info
+
+    # define an empty string
     output = ""
 
     for animal in animal_info:
@@ -26,18 +27,21 @@ def display_animals_info(animal_info):
         location = animal.get("locations",[])[0]
         animal_type = animal.get("characteristics", {}).get("type")
 
-        # add info only if it exists
+        # append information to each string
+        output += "<li class='cards__item'>"
         if name:
-            output += f"Name: {name}\n"
+            output += f"Name: {name}<br/>\n"
         if diet:
-            output += f"Diet : {diet}\n"
+            output += f"Diet : {diet}<br/>\n"
         if location:
-            output += f"Location : {location}\n"
+            output += f"Location : {location}<br/>\n"
         if animal_type:
-            output +=f"Type : {animal_type}\n"
+            output +=f"Type : {animal_type}<br/>\n"
+        output += "</li>"
     return output
 
 animals_short_info = display_animals_info(animal_date)
+print(animals_short_info)
 
 
 # Replace text in html with extracted info
